@@ -5,14 +5,14 @@ const BudgetSection = ({ data, updateData }) => {
 
     useEffect(() => {
         if (!data || typeof data !== 'object' || data.budget === undefined) {
-            updateData('budget', { budget: '0' });
+            updateData('budget', { budget: '0', state: 'init' });
         }
     }, []);
 
     const handleChange = e => {
         const value = e.target.value;
         setLocal({ ...local, budget: value });
-        updateData('budget', { budget: value });
+        updateData('budget', { budget: value, state:'done' });
     };
 
     return (
