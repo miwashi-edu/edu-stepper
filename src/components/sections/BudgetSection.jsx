@@ -1,25 +1,32 @@
 import { useEffect, useState } from 'react';
 
 const BudgetSection = ({ data, updateData }) => {
-    const [local, setLocal] = useState(() => data ?? { budget: '' });
+    const [local, setLocal] = useState(() => ({
+        budget: data?.budget ?? '',
+        state: data?.state ?? 'init',
+    }));
 
     useEffect(() => {
-        if (!data || typeof data !== 'object' || data.budget === undefined) {
-            updateData('budget', { budget: '0', state: 'init' });
+        if (!data) {
+            updateData('budget', local);
         }
     }, []);
 
     const handleChange = e => {
         const value = e.target.value;
-        setLocal({ ...local, budget: value });
-        updateData('budget', { budget: value, state:'done' });
+        const updated = { ...local, budget: value, state: 'done' };
+        setLocal(updated);
+        updateData('budget', updated);
     };
 
     return (
         <div>
             <label>
-                Name:{' '}
-                <input value={local.budget} onChange={handleChange} />
+                Budget:{' '}
+                <input
+                    value={local.budget || ''}
+                    onChange={handleChange}
+                />
             </label>
         </div>
     );

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './Stepper.module.css';
+import StepTab from './StepTab';
 import {
   CustomerSection,
   HomeTypeSection,
@@ -7,7 +8,7 @@ import {
   BudgetSection,
   NotesSection,
   SummarySection,
-} from '../sections'
+} from '../sections';
 
 const Stepper = ({ initialData, initialStep = 1 }) => {
   const [currentStep, setCurrentStep] = useState(initialStep);
@@ -32,7 +33,11 @@ const Stepper = ({ initialData, initialStep = 1 }) => {
     { key: 'customer', label: 'Customer', component: <CustomerSection data={data.customer} /> },
     { key: 'homeType', label: 'Home Type', component: <HomeTypeSection data={data.homeType} /> },
     { key: 'homeStyle', label: 'Home Style', component: <HomeStyleSection data={data.homeStyle} /> },
-    { key: 'budget', label: 'Budget', component: <BudgetSection data={data.budget} updateData={updateData}/> },
+    {
+      key: 'budget',
+      label: 'Budget',
+      component: <BudgetSection data={data.budget} updateData={updateData} />
+    },
     { key: 'notes', label: 'Notes', component: <NotesSection data={data.notes} /> },
     { key: 'summary', label: 'Summary', component: <SummarySection data={data} /> },
   ];
@@ -40,25 +45,22 @@ const Stepper = ({ initialData, initialStep = 1 }) => {
   return (
       <div>
         <div className={styles.stepper}>
-          {steps.map((step, index) => {
-            const state = data[step.key]?.state || 'init';
-            return (
-                <div
-                    key={index}
-                    className={`${styles.step} ${currentStep === index + 1 ? styles.active : ''} ${styles[state]}`}
-                    onClick={() => setCurrentStep(index + 1)}
-                >
-                  {step.label}
-                </div>
-            );
-          })}
+          {steps.map((step, index) => (
+              <StepTab
+                  key={step.key}
+                  label={step.label}
+                  isActive={currentStep === index + 1}
+                  state={data[step.key]?.state || 'init'}
+                  onClick={() => setCurrentStep(index + 1)}
+              />
+          ))}
         </div>
 
         <div className={styles.stepContent}>
           {steps[currentStep - 1]?.component}
         </div>
       </div>
-  )
+  );
 };
 
 export default Stepper;
