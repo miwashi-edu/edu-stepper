@@ -50,18 +50,38 @@ const BudgetSection = ({ data, updateData }) => {
                             name="budget"
                             value={budget}
                             checked={selected === budget}
-                            onChange={handleRadioChange}
+                            onChange={(e) => {
+                                setSelected(budget);
+                                handleRadioChange(e);
+                            }}
                             label={budget}
                         />
                     </div>
                 ))}
-                <label>
-                    Budget:{' '}
-                    <input
-                        value={local.budget || ''}
-                        onChange={handleChange}
+                <div className={styles.listItem}>
+                    <Choice
+                        name="budget"
+                        value="__custom__"
+                        checked={!defaultBudgetTypes.includes(selected)}
+                        onChange={() => {
+                            setSelected("__custom__");
+                            // Still needs to updateData with current local.budget
+                            updateData('budget', { ...local, state: 'done' });
+                        }}
+                        label="Other:"
                     />
-                </label>
+                    <input
+                        type="text"
+                        value={!defaultBudgetTypes.includes(local.budget) ? local.budget : ''}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setLocal({ ...local, budget: value, state: 'done' });
+                            updateData('budget', { ...local, budget: value, state: 'done' });
+                            setSelected("__custom__");
+                        }}
+                        className={styles.customInput}
+                    />
+                </div>
             </div>
         </Section>
     );
