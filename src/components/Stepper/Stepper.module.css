@@ -1,0 +1,33 @@
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb; /* Tailwind's gray-200 */
+}
+
+.step {
+    flex: 1;
+    text-align: center;
+    font-size: 0.875rem; /* text-sm */
+    color: #6b7280; /* gray-500 */
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+}
+
+.step.active {
+    color: #111827; /* gray-900 */
+    font-weight: 500;
+    border-color: #3b82f6; /* blue-500 */
+}
+
+.step {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.step:hover {
+    color: #374151; /* gray-700 */
+}
