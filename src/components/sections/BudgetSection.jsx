@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const BudgetSection = ({ data, updateData }) => {
     const [local, setLocal] = useState(() => data ?? { budget: '' });
