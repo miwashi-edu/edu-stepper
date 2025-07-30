@@ -4,12 +4,7 @@ import SectionTitle from './SectionTitle';
 import SectionAlert from './SectionAlert';
 import {ChoiceGroup} from '../Choices';
 
-export const Section = ({
-                            title,
-                            alert,
-                            choices,
-                            hasOther = false
-                        }) => {
+export const Section = ({title, alert, choices, hasOther = false}) => {
     const errors = [];
 
     if (typeof title !== 'string' || title.trim() === '') {

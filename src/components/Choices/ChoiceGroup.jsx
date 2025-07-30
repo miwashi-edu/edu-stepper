@@ -6,8 +6,6 @@ const ChoiceGroup = ({choices, hasOther=false}) => {
     const [selected, setSelected] = useState(null);
 
     const onChange = (value, data) => {
-        console.log('Selected ID:', value);
-        console.log('Selected amount:', data);
         setSelected(value);
     };
 

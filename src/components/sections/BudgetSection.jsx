@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import {defaultBudgetTypes} from './defaults';
+import {defaultBudgetTypes as choices} from './defaults';
 import {Section} from '../Section';
 import styles from "./sections.module.css";
-import Choices from "./Choices";
 
 const BudgetSection = ({ data, updateData }) => {
     const [selected, setSelected] = useState( data?.budget);
@@ -24,23 +23,21 @@ const BudgetSection = ({ data, updateData }) => {
         updateData('budget', updated);
     };
 
+
+    const alert = {
+        title: "Add the service fee or specific budget for the proposal",
+        alt: "The service fee selected successfully!",
+        type: "info",
+    }
+
     return (
         <Section
             key="budget-type"
             title='Service Fee'
             state={data?.state}
-            alertTitle='Add the service fee or specific budget for the proposal.'
-            alertAlternative='The service fee selected successfully!'
-        >
-            <Choices
-                choices={defaultBudgetTypes}
-                selected={selected}
-                local={local}
-                setSelected={setSelected}
-                setLocal={setLocal}
-                updateData={updateData}
-            />
-        </Section>
+            alert={alert}
+            choices={choices}
+        />
     );
 };
 
