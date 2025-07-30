@@ -16,8 +16,7 @@ const BudgetSection = ({ data, updateData }) => {
         }
     }, []);
 
-    const handleChange = e => {
-        const value = e.target.value;
+    const handleChange = (value) => {
         const updated = { ...local, budget: value, state: 'success' };
         setLocal(updated);
         updateData('budget', updated);
@@ -27,17 +26,17 @@ const BudgetSection = ({ data, updateData }) => {
     const alert = {
         title: "Add the service fee or specific budget for the proposal",
         alt: "The service fee selected successfully!",
-        type: "info",
+        type:data?.state,
     }
 
     return (
         <Section
             key="budget-type"
             title='Service Fee'
-            state={data?.state}
             alert={alert}
             choices={choices}
             hasOther={true}
+            handleChange = {handleChange}
         />
     );
 };

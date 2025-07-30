@@ -2,11 +2,18 @@ import React, { useState } from 'react';
 import styles from './Choices.module.css';
 import Choice from './Choice';
 
-const ChoiceGroup = ({choices, hasOther=false}) => {
+const ChoiceGroup = ({choices, hasOther=false, handleChange}) => {
     const [selected, setSelected] = useState(null);
 
     const onChange = (value, data) => {
+        console.log('onchange');
         setSelected(value);
+        handleChange(data);
+    };
+
+    const onChangeOtherField = (value, data) => {
+        setSelected(value);
+        if(data) handleChange(data);
     };
 
     return (
@@ -31,7 +38,7 @@ const ChoiceGroup = ({choices, hasOther=false}) => {
                         data=""
                         label="Other:"
                         checked={selected === 'other'}
-                        onChange={onChange}
+                        onChange={onChangeOtherField}
                         typeable={true}
                     />
                 </div>

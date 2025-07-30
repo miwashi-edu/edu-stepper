@@ -4,8 +4,13 @@ import SectionTitle from './SectionTitle';
 import SectionAlert from './SectionAlert';
 import {ChoiceGroup} from '../Choices';
 
-export const Section = ({title, alert, choices, hasOther = false}) => {
+export const Section = ({title, alert, choices, hasOther = false, handleChange}) => {
     const errors = [];
+    console.log(alert);
+
+    const handleNewChange = (value) => {
+        handleChange(value)
+    }
 
     if (typeof title !== 'string' || title.trim() === '') {
         errors.push('title must be a non-empty string');
@@ -18,7 +23,6 @@ export const Section = ({title, alert, choices, hasOther = false}) => {
     }
     if (
         typeof alert !== 'object' ||
-        typeof alert.type !== 'string' ||
         typeof alert.title !== 'string' ||
         typeof alert.alt !== 'string'
     ) {
@@ -37,7 +41,7 @@ export const Section = ({title, alert, choices, hasOther = false}) => {
                 <span>{alert.type === 'info' ? alert.title : alert.alt}</span>
             </SectionAlert>
 
-            <ChoiceGroup choices={choices} hasOther={hasOther} />
+            <ChoiceGroup choices={choices} hasOther={hasOther} handleChange={handleNewChange}/>
         </section>
     );
 };
