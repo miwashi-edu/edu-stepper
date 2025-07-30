@@ -37,6 +37,7 @@ const BudgetSection = ({ data, updateData }) => {
             state={data?.state}
             alert={alert}
             choices={choices}
+            hasOther={true}
         />
     );
 };

@@ -18,6 +18,7 @@ export default {
 export const Default = {
     args: {
         data: initialData.budget,
-        updateData: (value) => {console.log(value)}
+        updateData: (value) => {console.log(value)},
+        hasOther: true,
     }
 }
