@@ -6,7 +6,6 @@ import {ChoiceGroup} from '../Choices';
 
 export const Section = ({title, alert, choices, hasOther = false, handleChange}) => {
     const errors = [];
-    console.log(alert);
 
     const handleNewChange = (value) => {
         handleChange(value)

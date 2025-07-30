@@ -1,31 +1,42 @@
 import { useEffect, useState } from 'react';
+import {defaultHomeStyles as choices} from './defaults';
+import {Section} from "../Section";
 
 const HomeStyleSection = ({ data, updateData }) => {
+    const [selected, setSelected] = useState( data?.budget);
     const [local, setLocal] = useState(() => ({
-        style: data?.style ?? '',
+        budget: data?.budget ?? '',
         state: data?.state ?? 'info',
     }));
 
     useEffect(() => {
         if (!data) {
-            updateData('homeStyle', local);
+            updateData('budget', local);
         }
     }, []);
 
-    const handleChange = e => {
-        const value = e.target.value;
-        const updated = { ...local, style: value, state: 'success' };
+    const handleChange = (value) => {
+        const updated = { ...local, budget: value, state: 'success' };
         setLocal(updated);
         updateData('homeStyle', updated);
     };
 
+
+    const alert = {
+        title: "Add the service fee or specific budget for the proposal",
+        alt: "The service fee selected successfully!",
+        type:data?.state,
+    }
+
     return (
-        <div>
-            <label>
-                Style:{' '}
-                <input value={local.style || ''} onChange={handleChange} />
-            </label>
-        </div>
+        <Section
+            key="budget-type"
+            title='Service Fee'
+            alert={alert}
+            choices={choices}
+            hasOther={true}
+            handleChange = {handleChange}
+        />
     );
 };
 
