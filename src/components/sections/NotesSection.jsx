@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const NotesSection = ({ data, updateData }) => {
     const [local, setLocal] = useState(() => ({
         notes: data?.notes ?? '',
-        state: data?.state ?? 'init',
+        state: data?.state ?? 'info',
     }));
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const NotesSection = ({ data, updateData }) => {
 
     const handleChange = e => {
         const value = e.target.value;
-        const updated = { ...local, notes: value, state: 'done' };
+        const updated = { ...local, notes: value, state: 'success' };
         setLocal(updated);
         updateData('notes', updated);
     };

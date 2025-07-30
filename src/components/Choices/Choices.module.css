@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.row {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.choice {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #f3f7ff; /* pastel blue */
+    border-radius: 4px;
+    cursor: pointer;
+    box-sizing: border-box;
+    gap: 0.5rem; /* adds space between radio and label */
+}

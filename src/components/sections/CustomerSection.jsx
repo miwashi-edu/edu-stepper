@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const CustomerSection = ({ data, updateData }) => {
     const [local, setLocal] = useState(() => ({
         name: data?.name ?? '',
-        state: data?.state ?? 'init',
+        state: data?.state ?? 'info',
     }));
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const CustomerSection = ({ data, updateData }) => {
 
     const handleChange = e => {
         const value = e.target.value;
-        const updated = { ...local, name: value, state: 'done' };
+        const updated = { ...local, name: value, state: 'success' };
         setLocal(updated);
         updateData('customer', updated);
     };

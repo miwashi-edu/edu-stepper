@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const HomeTypeSection = ({ data, updateData }) => {
     const [local, setLocal] = useState(() => ({
         type: data?.type ?? '',
-        state: data?.state ?? 'init',
+        state: data?.state ?? 'info',
     }));
 
     useEffect(() => {
@@ -14,7 +14,7 @@ const HomeTypeSection = ({ data, updateData }) => {
 
     const handleChange = e => {
         const value = e.target.value;
-        const updated = { ...local, type: value, state: 'done' };
+        const updated = { ...local, type: value, state: 'success' };
         setLocal(updated);
         updateData('homeType', updated);
     };
