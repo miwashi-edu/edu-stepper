@@ -30,26 +30,10 @@ const Stepper = ({ initialData, initialStep = 1 }) => {
   };
 
   const steps = [
-    {
-      key: 'customer',
-      label: 'Customer',
-      component: <CustomerSection data={data.customer} updateData={updateData} />
-    },
-    {
-      key: 'homeType',
-      label: 'Home Type',
-      component: <HomeTypeSection data={data.homeType} updateData={updateData} />
-    },
-    {
-      key: 'homeStyle',
-      label: 'Home Style',
-      component: <HomeStyleSection data={data.homeStyle} updateData={updateData} />
-    },
-    {
-      key: 'budget',
-      label: 'Budget',
-      component: <BudgetSection data={data.budget} updateData={updateData} />
-    },
+    { key: 'customer', label: 'Customer', component: <CustomerSection data={data.customer} updateData={updateData} />},
+    { key: 'homeType', label: 'Home Type', component: <HomeTypeSection data={data.homeType} updateData={updateData} />},
+    { key: 'homeStyle', label: 'Home Style', component: <HomeStyleSection data={data.homeStyle} updateData={updateData} />},
+    { key: 'budget', label: 'Budget', component: <BudgetSection data={data.budget} updateData={updateData} />},
     { key: 'notes', label: 'Notes', component: <NotesSection data={data.notes} updateData={updateData} /> },
     { key: 'summary', label: 'Summary', component: <SummarySection data={data} /> },
   ];
