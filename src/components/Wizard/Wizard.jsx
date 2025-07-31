@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import styles from './Wizard.module.css';
 import Step from './Step.jsx';
+import Stepper from './Stepper.jsx';
 
 const Wizard = ({ initialData = {}, initialStep = 0, children }) => {
     const [data, setData] = useState(initialData);
@@ -8,19 +10,22 @@ const Wizard = ({ initialData = {}, initialStep = 0, children }) => {
         setData(prev => ({ ...prev, [key]: value }));
     };
 
-    const wrappedChildren = React.Children.map(children, (child) => (
-        <Step>
-            {React.cloneElement(child, {
-                data: data[child.type.name],
-                updateData: (val) => updateData(child.type.name, val)
-            })}
-        </Step>
-    ));
+    const wrappedChildren = React.Children.map(children, (child) => {
+        const key = child.type.name;
+        return (
+            <Step>
+                {React.cloneElement(child, {
+                    data, // full data object
+                    updateData: (val) => updateData(key, val)
+                })}
+            </Step>
+        );
+    });
+
 
     return (
         <>
-            {wrappedChildren}
-            <pre>{JSON.stringify(data, null, 2)}</pre>
+            <Stepper>{wrappedChildren}</Stepper>
         </>
     );
 };

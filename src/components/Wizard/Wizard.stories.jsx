@@ -12,8 +12,8 @@ export default {
 export const Default = {
     render: () =>
         <Wizard>
-            <Step1>hello</Step1>
-            <Step2>hello</Step2>
-            <Viewer>Hello</Viewer>
+            <Step1 />
+            <Step2 />
+            <Viewer />
         </Wizard>
 }

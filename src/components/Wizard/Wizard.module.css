@@ -1,0 +1,13 @@
+.stepTab {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.stepTabActive {
+    font-weight: bold;
+    border-bottom: 2px solid blue;
+}
