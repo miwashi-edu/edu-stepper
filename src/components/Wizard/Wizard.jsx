@@ -12,26 +12,34 @@ const Wizard = ({ initialData = {}, initialStep = 0, children }) => {
 
     const verifiedSteps = React.Children.toArray(children)
         .filter(child => {
-            const meta = child.type.meta;
-            const hasCaption = meta && typeof meta.caption === 'string';
-            const isVisible = !meta?.hidden;
+            const meta = child?.type?.meta;
+            const isHidden = meta?.hidden === true;
 
-            if (!hasCaption) {
-                console.warn(`Wizard: child ${child.type.name || 'Unknown'} is missing meta.caption. Skipping.`);
+            if (isHidden) {
+                console.log(`Wizard: child ${child?.type?.name || 'Unknown'} is marked hidden. Skipping.`);
             }
 
-            if (!isVisible) {
-                console.log(`Wizard: child ${child.type.name} is marked hidden. Skipping.`);
-            }
-            return hasCaption && isVisible;
+            return !isHidden;
         })
         .map(child => {
-            const meta = child.type.meta;
-            const key = meta?.node ?? child.type.name;
+            const meta = child?.type?.meta ?? {};
+            const defaultKey = child?.type?.name || 'UnknownStep';
+
+            const key = meta.key ?? defaultKey;
+            const caption = meta.caption ?? defaultKey;
+            const altCaption = meta.altCaption ?? '';
+
+            if (!child?.type?.meta) {
+                console.warn(`Wizard: child ${defaultKey} has no static meta. Using defaults.`);
+            } else {
+                if (!meta.caption) console.warn(`Wizard: child ${defaultKey} missing meta.caption. Using default.`);
+                if (!meta.key) console.warn(`Wizard: child ${defaultKey} missing meta.key. Using ${defaultKey}.`);
+            }
+
             return {
                 key,
-                caption: meta.caption,
-                altCaption: meta.altCaption || '',
+                caption,
+                altCaption,
                 element: (
                     <Step>
                         {React.cloneElement(child, {

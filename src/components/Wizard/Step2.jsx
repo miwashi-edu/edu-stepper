@@ -29,7 +29,7 @@ const Step2 = ({ data, updateData }) => {
 Step2.meta = {
     caption: 'Step 2',
     altCaption: 'Step 2',
-    node: "step2",
+    key: "step2",
     hidden: false
 };
 

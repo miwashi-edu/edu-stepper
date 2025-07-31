@@ -11,7 +11,7 @@ const Viewer = ({ data }) => {
 Viewer.meta = {
     caption: 'Viewer',
     altCaption: 'View for data',
-    node: "viewer",
+    key: "viewer",
     hidden: false
 };
 

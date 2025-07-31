@@ -1,0 +1,28 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import Wizard from './Wizard.jsx';
+import Step1 from './Step1.jsx';
+import Step2 from './Step2.jsx';
+import Viewer from './Viewer.jsx';
+
+import * as stories from './Wizard.stories';
+
+<Meta of={stories} />
+
+
+# Wizard
+
+The `Wizard` component is a flexible, data-agnostic container that allows multi-step data input using pluggable steps.
+
+Each child of the `Wizard` is treated as a **step** and wrapped in a common layout. Steps can contribute to a shared `data` object via the provided `updateData` method. A tab bar allows navigating between steps.
+
+## Step Requirements
+
+Each step **must be a named React component** and define static metadata via the `meta` field:
+
+```js
+Step1.meta = {
+  key: 'Step1',              // Optional: used as the key in data
+  caption: 'Personal Info',  // Required: used in tab
+  altCaption: 'Step 1',      // Optional: hover tooltip
+  hidden: false              // Optional: skips rendering if true
+};
