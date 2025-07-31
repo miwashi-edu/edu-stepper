@@ -10,22 +10,46 @@ const Wizard = ({ initialData = {}, initialStep = 0, children }) => {
         setData(prev => ({ ...prev, [key]: value }));
     };
 
-    const wrappedChildren = React.Children.map(children, (child) => {
-        const key = child.type.name;
-        return (
-            <Step>
-                {React.cloneElement(child, {
-                    data, // full data object
-                    updateData: (val) => updateData(key, val)
-                })}
-            </Step>
-        );
-    });
+    const verifiedSteps = React.Children.toArray(children)
+        .filter(child => {
+            const meta = child.type.meta;
+            const hasCaption = meta && typeof meta.caption === 'string';
+            const isVisible = !meta?.hidden;
 
+            if (!hasCaption) {
+                console.warn(`Wizard: child ${child.type.name || 'Unknown'} is missing meta.caption. Skipping.`);
+            }
+
+            if (!isVisible) {
+                console.log(`Wizard: child ${child.type.name} is marked hidden. Skipping.`);
+            }
+            return hasCaption && isVisible;
+        })
+        .map(child => {
+            const meta = child.type.meta;
+            const key = meta?.node ?? child.type.name;
+            return {
+                key,
+                caption: meta.caption,
+                altCaption: meta.altCaption || '',
+                element: (
+                    <Step>
+                        {React.cloneElement(child, {
+                            data,
+                            updateData: (val) => updateData(key, val)
+                        })}
+                    </Step>
+                )
+            };
+        });
+
+    if (verifiedSteps.length === 0) {
+        return <div>Wizard has no valid steps to display.</div>;
+    }
 
     return (
         <>
-            <Stepper>{wrappedChildren}</Stepper>
+            <Stepper steps={verifiedSteps} />
         </>
     );
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Viewer from "./Viewer.jsx";
 
 const Step1 = ({ data, updateData }) => {
     const [local, setLocal] = useState(data.Step1 || {});
@@ -23,6 +24,13 @@ const Step1 = ({ data, updateData }) => {
             <button onClick={handleClick}>Toggle State</button><br />
         </div>
     );
+};
+
+Step1.meta = {
+    caption: 'Step 1',
+    altCaption: 'Step 1',
+    node: "step1",
+    hidden: false
 };
 
 

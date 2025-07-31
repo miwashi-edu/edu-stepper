@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Step1 from "./Step1.jsx";
 
 const Step2 = ({ data, updateData }) => {
     const [local, setLocal] = useState(data.Step1 || {});
@@ -25,5 +26,11 @@ const Step2 = ({ data, updateData }) => {
     );
 };
 
+Step2.meta = {
+    caption: 'Step 2',
+    altCaption: 'Step 2',
+    node: "step2",
+    hidden: false
+};
 
 export default Step2;

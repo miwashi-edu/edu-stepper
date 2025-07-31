@@ -8,4 +8,11 @@ const Viewer = ({ data }) => {
     );
 };
 
+Viewer.meta = {
+    caption: 'Viewer',
+    altCaption: 'View for data',
+    node: "viewer",
+    hidden: false
+};
+
 export default Viewer;
