@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import Step1 from "./Step1.jsx";
 
 const Step2 = ({ data, updateData }) => {
-    const [local, setLocal] = useState(data.Step1 || {});
+    const key = Step2.meta.key;
+
+    const [local, setLocal] = useState(() => {
+        return data[key] || { state: 'initialized' };
+    });
 
     useEffect(() => {
-        setLocal(data.Step1 || {});
-    }, [data]);
+        setLocal(data[key] || { state: 'initialized' });
+    }, [data, key]);
 
-    const handleClick = () => {
-        const newState = {
-            ...local,
-            state: local.state === 'clicked' ? 'unclicked' : 'clicked'
-        };
-        setLocal(newState);
-        if (typeof updateData === 'function') {
-            updateData(newState); // updates data.Step1
-        }
+    const toggleState = () => {
+        const nextState = {
+            initialized: 'success',
+            success: 'failure',
+            failure: 'initialized'
+        }[local.state] || 'initialized';
+
+        const updated = { ...local, state: nextState };
+        setLocal(updated);
+        updateData(updated);
     };
 
     return (
         <div>
-            <button onClick={handleClick}>Toggle State</button><br />
+            <button onClick={toggleState}>Toggle State</button><br />
+            Current: <strong>{local.state}</strong>
         </div>
     );
 };
 
 Step2.meta = {
     caption: 'Step 2',
-    altCaption: 'Step 2',
-    key: "step2",
-    hidden: false
+    key: 'Step2',
+    altCaption: 'Toggle state of Step 2'
 };
 
 export default Step2;

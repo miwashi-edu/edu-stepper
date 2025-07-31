@@ -9,7 +9,16 @@ const Stepper = ({ steps }) => {
         return <div>No valid steps found.</div>;
     }
 
-    const currentStep = steps[activeIndex] || steps[0];
+    const getStatus = (step) => {
+        const state = step.data?.[step.key]?.state;
+
+        if (!state || state === 'initialized') return 'initialized';
+        if (state === 'success') return 'success';
+        return 'failure'; // any non-success state is failure
+    };
+
+
+    const currentStep = steps[activeIndex];
 
     return (
         <div>
@@ -21,16 +30,15 @@ const Stepper = ({ steps }) => {
                         isActive={index === activeIndex}
                         onClick={() => setActiveIndex(index)}
                         altCaption={step.altCaption}
+                        status={getStatus(step)}
                     >
                         {step.caption}
                     </StepTab>
                 ))}
-
             </div>
             <div>{currentStep.element}</div>
         </div>
     );
 };
-
 
 export default Stepper;

@@ -1,13 +1,26 @@
 .stepTab {
     padding: 0.5rem 1rem;
+    background: none;
     border: none;
     border-bottom: 2px solid transparent;
-    background: none;
     cursor: pointer;
-    outline: none;
+    display: flex;
+    align-items: center;
 }
 
-.stepTabActive {
+.active {
     font-weight: bold;
     border-bottom: 2px solid blue;
+}
+
+.initialized {
+    color: gray;
+}
+
+.success {
+    color: green;
+}
+
+.failure {
+    color: red;
 }

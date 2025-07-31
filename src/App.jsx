@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Stepper} from './components';
+import {Wizard} from './components';
 import './App.css';
 
 function App() {
@@ -8,7 +8,8 @@ function App() {
   return (
     <>
       <div>
-          <Stepper/>
+          <Wizard>
+          </Wizard>
       </div>
     </>
   )

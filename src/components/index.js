@@ -1,5 +1,5 @@
-import {Stepper} from './Stepper'
+import {Wizard} from './Wizard';
 
 export {
-    Stepper
+    Wizard
 }

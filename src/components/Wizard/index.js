@@ -1,7 +1,5 @@
-import React from "react";
+import Wizard from './Wizard';
 
-const Wizard = () => {
-    return (
-        <>Wizard</>
-    )
+export {
+    Wizard
 }

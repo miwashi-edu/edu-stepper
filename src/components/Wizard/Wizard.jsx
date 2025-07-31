@@ -29,6 +29,13 @@ const Wizard = ({ initialData = {}, initialStep = 0, children }) => {
             const caption = meta.caption ?? defaultKey;
             const altCaption = meta.altCaption ?? '';
 
+            const stepData = data[key] || {};
+            const rawState = stepData.state;
+
+            let status = 'initialized';
+            if (rawState === 'success') status = 'success';
+            else if (rawState && rawState !== 'initialized') status = 'failure';
+
             if (!child?.type?.meta) {
                 console.warn(`Wizard: child ${defaultKey} has no static meta. Using defaults.`);
             } else {
@@ -40,6 +47,7 @@ const Wizard = ({ initialData = {}, initialStep = 0, children }) => {
                 key,
                 caption,
                 altCaption,
+                data, // this line is required for Stepper to access state
                 element: (
                     <Step>
                         {React.cloneElement(child, {
@@ -49,6 +57,7 @@ const Wizard = ({ initialData = {}, initialStep = 0, children }) => {
                     </Step>
                 )
             };
+
         });
 
     if (verifiedSteps.length === 0) {
