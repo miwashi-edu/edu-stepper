@@ -1,24 +1,26 @@
 import React from 'react';
 import styles from './Wizard.module.css';
+import { CheckCircle, Circle, XCircle } from 'lucide-react';
 
-const ICONS = {
-    initialized: '⚪',
-    success: '✅',
-    failure: '❌',
-};
+const StepTab = ({ label, isActive, state = 'initialized', onClick }) => {
+    let icon = <Circle size={20} />;
+    let stateClass = styles.init;
 
-const StepTab = ({ isActive, onClick, children, altCaption, status }) => {
-    const icon = ICONS[status] || '❓';
+    if (state === 'success') {
+        icon = <CheckCircle size={20} />;
+        stateClass = styles.success;
+    } else if (state !== 'initialized') {
+        icon = <XCircle size={20} />;
+        stateClass = styles.err;
+    }
 
     return (
-        <button
-            onClick={onClick}
-            title={altCaption}
-            className={`${styles.stepTab} ${isActive ? styles.active : ''}`}
-        >
-            <span style={{ marginRight: '0.5rem' }}>{icon}</span>
-            {children}
-        </button>
+        <div className={`${styles.wrapper} ${isActive ? styles.active : ''}`} onClick={onClick}>
+            <div className={`${styles.square} ${stateClass}`}>
+                {icon}
+            </div>
+            <span className={styles.label}>{label}</span>
+        </div>
     );
 };
 

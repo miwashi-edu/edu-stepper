@@ -13,41 +13,26 @@ const Wizard = ({ initialData = {}, initialStep = 0, children }) => {
     const verifiedSteps = React.Children.toArray(children)
         .filter(child => {
             const meta = child?.type?.meta;
-            const isHidden = meta?.hidden === true;
-
-            if (isHidden) {
-                console.log(`Wizard: child ${child?.type?.name || 'Unknown'} is marked hidden. Skipping.`);
-            }
-
-            return !isHidden;
+            return !meta?.hidden;
         })
         .map(child => {
             const meta = child?.type?.meta ?? {};
             const defaultKey = child?.type?.name || 'UnknownStep';
-
             const key = meta.key ?? defaultKey;
             const caption = meta.caption ?? defaultKey;
-            const altCaption = meta.altCaption ?? '';
+            const role = meta.role ?? 'default';
 
             const stepData = data[key] || {};
             const rawState = stepData.state;
-
-            let status = 'initialized';
-            if (rawState === 'success') status = 'success';
-            else if (rawState && rawState !== 'initialized') status = 'failure';
-
-            if (!child?.type?.meta) {
-                console.warn(`Wizard: child ${defaultKey} has no static meta. Using defaults.`);
-            } else {
-                if (!meta.caption) console.warn(`Wizard: child ${defaultKey} missing meta.caption. Using default.`);
-                if (!meta.key) console.warn(`Wizard: child ${defaultKey} missing meta.key. Using ${defaultKey}.`);
-            }
+            const state = rawState || (role === 'viewer' ? 'viewer' : 'initialized');
+            const icon = role === 'viewer' ? 'eye' : null;
 
             return {
                 key,
                 caption,
-                altCaption,
-                data, // this line is required for Stepper to access state
+                state,
+                icon,
+                data, // Pass full data here
                 element: (
                     <Step>
                         {React.cloneElement(child, {
@@ -57,18 +42,13 @@ const Wizard = ({ initialData = {}, initialStep = 0, children }) => {
                     </Step>
                 )
             };
-
         });
 
     if (verifiedSteps.length === 0) {
         return <div>Wizard has no valid steps to display.</div>;
     }
 
-    return (
-        <>
-            <Stepper steps={verifiedSteps} />
-        </>
-    );
+    return <Stepper steps={verifiedSteps} initialStep={initialStep} />;
 };
 
 export default Wizard;

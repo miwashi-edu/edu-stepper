@@ -12,6 +12,7 @@ Viewer.meta = {
     caption: 'Viewer',
     altCaption: 'View for data',
     key: "viewer",
+    role: 'viewer',
     hidden: false
 };
 
