@@ -18,11 +18,12 @@ const Stepper = ({ steps, initialStep = 0 }) => {
                     <StepTab
                         key={step.key}
                         label={step.caption}
-                        state={step.state}
-                        icon={step.icon}
                         isActive={index === activeIndex}
+                        state={step.state}
+                        view={step.view} // NEW
                         onClick={() => setActiveIndex(index)}
                     />
+
                 ))}
             </div>
             <div>{currentStep?.element}</div>

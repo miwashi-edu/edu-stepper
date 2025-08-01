@@ -1,12 +1,15 @@
 import React from 'react';
 import styles from './Wizard.module.css';
-import { CheckCircle, Circle, XCircle } from 'lucide-react';
+import { CheckCircle, Circle, XCircle, Eye } from 'lucide-react';
 
-const StepTab = ({ label, isActive, state = 'initialized', onClick }) => {
+const StepTab = ({ label, isActive, state = 'initialized', view = false, onClick }) => {
     let icon = <Circle size={20} />;
     let stateClass = styles.init;
 
-    if (state === 'success') {
+    if (view) {
+        icon = <Eye size={20} />;
+        stateClass = styles.view; // optionally add `.view {}` style
+    } else if (state === 'success') {
         icon = <CheckCircle size={20} />;
         stateClass = styles.success;
     } else if (state !== 'initialized') {

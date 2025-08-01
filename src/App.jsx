@@ -1,14 +1,17 @@
-import { useState } from 'react';
-import {Wizard} from './components';
+import {Wizard, Step1, Step4, Step3, Step2, Viewer} from './components/Wizard';
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
       <div>
           <Wizard>
+              <Step1 />
+              <Step2 />
+              <Step3 />
+              <Step4 />
+              <Viewer />
           </Wizard>
       </div>
     </>

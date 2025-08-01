@@ -20,19 +20,28 @@ const Wizard = ({ initialData = {}, initialStep = 0, children }) => {
             const defaultKey = child?.type?.name || 'UnknownStep';
             const key = meta.key ?? defaultKey;
             const caption = meta.caption ?? defaultKey;
+            const altCaption = meta.altCaption ?? '';
             const role = meta.role ?? 'default';
 
             const stepData = data[key] || {};
             const rawState = stepData.state;
-            const state = rawState || (role === 'viewer' ? 'viewer' : 'initialized');
-            const icon = role === 'viewer' ? 'eye' : null;
+
+            // fix: determine proper state
+            let state = 'initialized';
+            if (role === 'viewer') {
+                state = 'viewer';
+            } else if (rawState === 'success') {
+                state = 'success';
+            } else if (rawState && rawState !== 'initialized') {
+                state = 'failure';
+            }
 
             return {
                 key,
                 caption,
+                altCaption,
                 state,
-                icon,
-                data, // Pass full data here
+                view: role === 'viewer',
                 element: (
                     <Step>
                         {React.cloneElement(child, {
