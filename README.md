@@ -1,8 +1,111 @@
-# React + Vite
+# edu-wizard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The `Wizard` component is a flexible, data-agnostic container that allows multi-step data input using pluggable steps.
 
-Currently, two official plugins are available:
+Each child of the `Wizard` is treated as a **step** and wrapped in a common layout. Steps can contribute to a shared `data` object via the provided `updateData` method. A tab bar allows navigating between steps.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
+
+## Usage
+
+```jsx
+<Wizard>
+    <Step1 />
+    <Step2 />
+    <Viewer />
+</Wizard>
+```
+
+---
+
+## Minimum Viable Step
+
+```jsx
+const Step1 = ({ data, updateData }) => {
+    const [local, setLocal] = useState(data.Step1 || {});
+
+    useEffect(() => {
+        setLocal(data.Step1 || {});
+    }, [data]);
+
+    const handleClick = () => {
+        const updated = { ...local, state: 'success' };
+        setLocal(updated);
+        updateData(updated);
+    };
+
+    return (
+        <div>
+            <button onClick={handleClick}>Mark Success</button>
+        </div>
+    );
+};
+
+Step1.meta = {
+    caption: 'Step 1'
+};
+
+export default Step1;
+```
+
+---
+
+## Step Requirements
+
+Each step **must be a named React component** and define static metadata via the `meta` field:
+
+```js
+Step1.meta = {
+  key: 'Step1',              // Optional: used as the key in data
+  caption: 'Personal Info',  // Required: used in tab
+  altCaption: 'Step 1',      // Optional: hover tooltip
+  hidden: false              // Optional: skips rendering if true
+};
+```
+
+If `meta` is missing or incomplete, the wizard will fall back to defaults and log a warning. Steps are only skipped if `meta.hidden === true`.
+
+---
+
+## State Model and Validation
+
+Each step:
+- Receives the full `data` object.
+- Reads and modifies only its own slice (`data.StepX`).
+- Pushes updates using `updateData(localState)`.
+
+A step is considered **valid** when:
+```js
+state === 'success'
+```
+
+Any other state is considered a failure. This enables centralized validation later.
+
+---
+
+## Viewer Step
+
+The `Viewer` step is a **read-only component** that displays the entire shared `data` object.
+
+It’s useful for debugging, validation display, or a confirmation screen before final submission. It does not modify data and only uses the `data` prop.
+
+```jsx
+const Viewer = ({ data }) => {
+    return (
+        <div>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+        </div>
+    );
+};
+
+Viewer.meta = {
+    caption: 'Viewer',
+    altCaption: 'View for data',
+    key: 'viewer',
+    hidden: false
+};
+
+export default Viewer;
+```
+
+> 💡 Place the `Viewer` as the final step to let users inspect all input before submitting.
